@@ -1,0 +1,35 @@
+<div
+  class="
+    mx-auto max-w-3xl px-4 sm:px-6 pt-24 md:flex md:items-center md:justify-between
+    md:space-x-5 lg:max-w-7xl lg:px-8
+  "
+>
+  <div class="flex items-center space-x-5">
+    <div class="shrink-0">
+      <div class="relative">
+        <div class="avatar">
+          <div class="w-24 rounded-full">
+            <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900"><%= Current.user.name + " " + Current.user.family_name %></h1>
+      <p class="text-sm font-medium text-gray-500">Applied for
+        <a href="#" class="text-gray-900">Front End Developer</a>
+        on
+        <time datetime="2020-08-25">August 25, 2020</time></p>
+    </div>
+  </div>
+  <div
+    class="
+      mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse
+      sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse
+      md:mt-0 md:flex-row md:space-x-3
+    "
+  >
+    <button type="button" class="btn btn-outline">Edit Profile</button>
+    <button type="button" class="btn btn-primary">Ask for verification</button>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<%= render "practitioner_dashboard/dashboard/partials/header" %>
+<%= render "practitioner_dashboard/dashboard/partials/mobile_menu" %>
+<main>
+  <div class="relative isolate overflow-hidden pt-16">
+    <%= render "practitioner_dashboard/dashboard/partials/secondary_navigation" %>
+    <%= render "practitioner_dashboard/dashboard/partials/stats" %>
+    <%= render "practitioner_dashboard/dashboard/partials/profile" %>
+  </div>
+
+  <div class="space-y-16 py-8 xl:space-y-20">
+    <%= render "practitioner_dashboard/dashboard/partials/recent_activity" %>
+    <%= render "practitioner_dashboard/dashboard/partials/recent_clients" %>
+  </div>
+</main>

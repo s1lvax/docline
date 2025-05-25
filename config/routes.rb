@@ -4,8 +4,15 @@ Rails.application.routes.draw do
   get "registrations/practitioner"
   post "registrations/create_user", to: "registrations#create_user", as: :practitioner_registration
 
-  # practitioner dashboard
-  get "practitioner_dashboard", to: "practitioner_dashboard#index"
+  # dashboard root
+  get "practitioner_dashboard", to: "practitioner_dashboard/dashboard#index",
+      as: :practitioner_dashboard
+
+  # everything under /practitioner_dashboard/... lives in that folder
+  namespace :practitioner_dashboard, path: "practitioner_dashboard" do
+    resource :practitioner_profile, only: [ :show, :edit, :update ]
+  end
+
 
   resource :session
   resources :passwords, param: :token
