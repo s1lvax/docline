@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get "registrations/practitioner"
   post "registrations/create_user", to: "registrations#create_user", as: :practitioner_registration
 
+  # practitioner dashboard
+  get "practitioner_dashboard", to: "practitioner_dashboard#index"
+
   resource :session
   resources :passwords, param: :token
   get "pages/index"
