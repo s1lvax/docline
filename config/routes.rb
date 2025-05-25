@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # registrations
   get "registrations/patient"
   get "registrations/practitioner"
-  post "registrations/create_user"
+  post "registrations/create_user", to: "registrations#create_user", as: :practitioner_registration
 
   resource :session
   resources :passwords, param: :token
