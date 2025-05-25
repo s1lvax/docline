@@ -12,6 +12,8 @@ class RegistrationsController < ApplicationController
 
     if @user.save
       start_new_session_for(@user)
+      # Send welcome email to new users
+      PractitionerMailer.welcome(@user).deliver_later
       redirect_to root_path, notice: "Registration sucessful"
     else
       render @user.practitioner? ? :practitioner : :patient
