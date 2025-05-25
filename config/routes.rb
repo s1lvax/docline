@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  # registrations
+  get "registrations/patient"
+  get "registrations/practitioner"
+  post "registrations/create_user"
+
   resource :session
   resources :passwords, param: :token
   get "pages/index"

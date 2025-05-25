@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full">
   <head>
     <title><%= content_for(:title) || "Docline" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -22,7 +22,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="h-full bg-white">
     <%= yield %>
   </body>
 </html>
