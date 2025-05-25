@@ -1,0 +1,4 @@
+CREATE DATABASE docline_production;
+CREATE DATABASE docline_production_cache;
+CREATE DATABASE docline_production_queue;
+CREATE DATABASE docline_production_cable;
