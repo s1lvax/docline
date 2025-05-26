@@ -1,0 +1,8 @@
+<% if @profile.profile_picture&.attached? %>
+  <%= image_tag @profile.profile_picture, class: "rounded-full" %>
+<% else %>
+  <img
+    src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"
+    class="w-full rounded-full"
+  />
+<% end %>
