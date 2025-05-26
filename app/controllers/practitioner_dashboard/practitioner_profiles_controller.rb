@@ -32,7 +32,7 @@ module PractitionerDashboard
 
     def practitioner_profile_params
       params.require(:practitioner_profile)
-            .permit(:name, :contact_email, :bio, :profession, :profile_picture, :address)
+            .permit(:name, :contact_email, :phone, :bio, :profession, :profile_picture, :address)
     end
 
     def require_practitioner

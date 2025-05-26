@@ -77,6 +77,15 @@
                 <%= form.email_field :contact_email, autocomplete: "email", class: "input w-full" %>
               </div>
             </div>
+            <!-- Phone -->
+            <div class="sm:col-span-6">
+              <%= form.label :phone,
+                         "Public phone number",
+                         class: "block text-sm font-medium text-gray-900" %>
+              <div class="mt-2">
+                <%= form.phone_field :phone, autocomplete: "phone", class: "input w-full" %>
+              </div>
+            </div>
             <!-- Address -->
             <div class="sm:col-span-6">
               <%= form.label :address, "Address", class: "block text-sm font-medium text-gray-900" %>
