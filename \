@@ -1,5 +1,6 @@
 <%= render "practitioner_dashboard/dashboard/partials/header" %>
 <%= render "practitioner_dashboard/practitioner_profiles/partials/profile_header" %>
+
 <div class="min-h-full">
   <main class="py-18">
     <div

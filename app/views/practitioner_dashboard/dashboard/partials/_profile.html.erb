@@ -100,9 +100,9 @@
         </div>
       </div>
       <div class="mt-6 flex space-x-3 md:mt-0 md:ml-4">
-        <button type="button" class="btn btn-primary">
-          View profile
-        </button>
+        <%= link_to "View profile",
+        practitioner_dashboard_practitioner_profile_path,
+        class: "btn btn-primary" %>
       </div>
     </div>
   </div>

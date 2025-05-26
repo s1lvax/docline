@@ -1,0 +1,99 @@
+<%= render "practitioner_dashboard/dashboard/partials/header" %>
+<div
+  class="
+    min-h-screen flex items-center justify-center px-4 pt-10 sm:px-6 lg:px-8
+  "
+>
+  <div class="w-full max-w-5xl">
+    <%= form_with model: [:practitioner_dashboard, @profile], local: true do |form| %>
+      <div class="space-y-16 bg-white p-6 sm:p-10">
+        <!-- Profile section -->
+        <div class="pb-8">
+          <h2 class="text-lg font-semibold text-gray-900">Profile</h2>
+          <p class="mt-1 text-sm text-gray-600">
+            This information will be displayed publicly so be careful what you
+            share.
+          </p>
+
+          <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <!-- Profile Picture -->
+            <div class="col-span-full">
+              <%= form.label :profile_picture,
+                         "Profile Picture",
+                         class: "block text-sm font-medium text-gray-900" %>
+              <div class="mt-2 flex items-center gap-x-3">
+                <% if @profile.profile_picture.attached? %>
+                  <div class="avatar">
+                    <div class="w-24 rounded-full">
+                      <%= image_tag @profile.profile_picture %>
+                    </div>
+                  </div>
+                <% else %>
+                  <svg
+                    class="size-12 text-gray-300"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path fill-rule="evenodd" d="..." clip-rule="evenodd"/>
+                  </svg>
+                <% end %>
+                <%= form.file_field :profile_picture, class: "file-input" %>
+              </div>
+            </div>
+            <!-- Public name -->
+            <div class="sm:col-span-6">
+              <%= form.label :name,
+                         "Public name",
+                         class: "block text-sm font-medium text-gray-900" %>
+              <div class="mt-2">
+                <%= form.text_field :name, autocomplete: "name", class: "input w-full" %>
+              </div>
+            </div>
+            <!-- Profession -->
+            <div class="sm:col-span-6">
+              <%= form.label :profession,
+                         "Profession",
+                         class: "block text-sm font-medium text-gray-900" %>
+              <div class="mt-2">
+                <%= form.text_field :profession, placeholder: "Psychologist", class: "input w-full" %>
+              </div>
+            </div>
+            <!-- Bio -->
+            <div class="col-span-full">
+              <%= form.label :bio,
+                         "Your Public Bio",
+                         class: "block text-sm font-medium text-gray-900" %>
+              <div class="mt-2">
+                <%= form.rich_text_area :bio, rows: 6, class: "textarea w-full" %>
+              </div>
+            </div>
+            <!-- Contact Email -->
+            <div class="sm:col-span-6">
+              <%= form.label :contact_email,
+                         "Email address (Public)",
+                         class: "block text-sm font-medium text-gray-900" %>
+              <div class="mt-2">
+                <%= form.email_field :contact_email, autocomplete: "email", class: "input w-full" %>
+              </div>
+            </div>
+            <!-- Address -->
+            <div class="sm:col-span-6">
+              <%= form.label :address, "Address", class: "block text-sm font-medium text-gray-900" %>
+              <div class="mt-2">
+                <%= form.text_field :address, autocomplete: "address", class: "input w-full" %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Form actions -->
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+          <%= link_to "Cancel",
+          practitioner_dashboard_practitioner_profile_path,
+          class: "text-sm font-semibold text-gray-900" %>
+          <%= form.submit "Save", class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

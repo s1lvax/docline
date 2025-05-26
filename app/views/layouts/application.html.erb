@@ -23,6 +23,9 @@
   </head>
 
   <body class="h-full bg-white">
+    <div data-controller="flash">
+      <%= render "layouts/shared/alerts" %>
+    </div>
     <div data-controller="mobile-menu">
       <%= yield %>
     </div>
