@@ -51,34 +51,21 @@
                         class: "select w-full" %>
           </div>
         </div>
-        <!-- Start Time -->
-        <div>
-          <%# 30 min interval time options %>
-          <% def workday_time_options
-            (5..23).flat_map { |h| [0, 30].map { |m| format("%02d:%02d", h, m) } }
-          end %>
-          <%= form.label :start_time,
-                     "Start time",
-                     class: "block text-sm font-medium text-gray-900" %>
-          <div class="mt-2">
-            <%= form.select :start_time,
-                        workday_time_options.map { |t| [t, t] },
-                        { prompt: "Select start time" },
-                        class: "select w-full" %>
-          </div>
-        </div>
-        <!-- End Time -->
-        <div>
-          <%= form.label :end_time,
-                     "End time",
-                     class: "block text-sm font-medium text-gray-900" %>
-          <div class="mt-2">
-            <%= form.select :end_time,
-                        workday_time_options.map { |t| [t, t] },
-                        { prompt: "Select end time" },
-                        class: "select w-full" %>
-          </div>
-        </div>
+        <%= form.select :start_time,
+                    workday_time_options.map { |t| [t, t] },
+                    {
+                      prompt: "Select start time",
+                      selected: practitioner_availability.start_time&.strftime("%H:%M"),
+                    },
+                    class: "select w-full" %>
+
+        <%= form.select :end_time,
+                    workday_time_options.map { |t| [t, t] },
+                    {
+                      prompt: "Select end time",
+                      selected: practitioner_availability.end_time&.strftime("%H:%M"),
+                    },
+                    class: "select w-full" %>
         <!-- Slot Duration -->
         <div>
           <%= form.label :slot_duration_minutes,
