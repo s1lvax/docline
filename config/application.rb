@@ -21,11 +21,11 @@ module Docline
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    config.time_zone = "Europe/Brussels"
+    # config.time_zone = "Europe/Brussels"
     # config.eager_load_paths << Rails.root.join("extras")
 
     # config emails
     config.action_mailer.delivery_method = :postmark
-    config.action_mailer.postmark_settings = { :api_token => Rails.application.credentials.dig(:postmark, :api_key) }
+    config.action_mailer.postmark_settings = { api_token: Rails.application.credentials.dig(:postmark, :api_key) }
   end
 end

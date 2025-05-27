@@ -1,0 +1,1 @@
+json.partial! "practitioner_dashboard/practitioner_availabilities/practitioner_dashboard_practitioner_availability", practitioner_dashboard_practitioner_availability: @practitioner_dashboard_practitioner_availability
