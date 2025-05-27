@@ -16,6 +16,7 @@ class PractitionerAvailability < ApplicationRecord
 
   after_commit :generate_slots, on: [ :create, :update ]
   after_destroy :delete_slots
+  after_update_commit :regenerate_slots
 
   def generate_slots
     SlotGenerationJob.perform_later(self.id)
@@ -23,6 +24,10 @@ class PractitionerAvailability < ApplicationRecord
 
   def delete_slots
     SlotDeletionJob.perform_later(self.id)
+  end
+
+  def regenerate_slots
+    SlotRegenerationJob.perform_later(self.id)
   end
 
   private
