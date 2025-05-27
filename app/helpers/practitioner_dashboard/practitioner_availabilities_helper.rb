@@ -1,0 +1,2 @@
+module PractitionerDashboard::PractitionerAvailabilitiesHelper
+end
