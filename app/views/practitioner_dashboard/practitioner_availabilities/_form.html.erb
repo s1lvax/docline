@@ -1,63 +1,123 @@
-<%= form_with(model: practitioner_availability, url: practitioner_dashboard_practitioner_availabilities_path, class: "contents") do |form| %>
-  <% if practitioner_availability.errors.any? %>
-    <div
-      id="error_explanation"
-      class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3"
-    >
-      <h2><%= pluralize(
-          practitioner_dashboard_practitioner_availability.errors.count,
-          "error",
-        ) %>
-        prohibited this practitioner_dashboard_practitioner_availability from
-        being saved:</h2>
+<%= render "practitioner_dashboard/dashboard/partials/header" %>
+<div
+  class="
+    min-h-screen flex items-center justify-center px-4 pt-10 sm:px-6 lg:px-8
+  "
+>
+  <div class="w-full max-w-xl">
+    <%= form_with(
+      model: practitioner_availability,
+      url: practitioner_availability.persisted? ?
+        practitioner_dashboard_practitioner_availability_path(practitioner_availability) :
+        practitioner_dashboard_practitioner_availabilities_path,
+      method: practitioner_availability.persisted? ? :patch : :post,
+      local: true
+    ) do |form| %>
+      <div
+        class="
+          bg-white p-6 sm:p-10 rounded-2xl border border-gray-200 space-y-8
+        "
+      >
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900">
+            <%= practitioner_availability.persisted? ? "Edit Availability" : "New Availability" %>
+          </h2>
+          <p class="mt-1 text-sm text-gray-600">
+            Set your available time slots for clients to book. These times will
+            repeat weekly.
+          </p>
+        </div>
 
-      <ul class="list-disc ml-6">
-        <% practitioner_dashboard_practitioner_availability.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% if practitioner_availability.errors.any? %>
+          <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <h3 class="font-semibold mb-1"><%= pluralize(practitioner_availability.errors.count, "error") %>
+              prohibited this availability:</h3>
+            <ul class="ml-5 list-disc text-sm">
+              <% practitioner_availability.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="my-5">
-  <div class="my-5">
-    <%= form.label :start_time %>
-    <%= form.datetime_field :start_time,
-                        class: [
-                          "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                          {
-                            "border-gray-400 focus:outline-blue-600":
-                              practitioner_availability.errors[
-                                :start_time
-                              ].none?,
-                            "border-red-400 focus:outline-red-600":
-                              practitioner_availability.errors[
-                                :start_time
-                              ].any?,
-                          },
-                        ] %>
+        <!-- Day of the week -->
+        <div>
+          <%= form.label :weekday,
+                     "Day of the week",
+                     class: "block text-sm font-medium text-gray-900" %>
+          <div class="mt-2">
+            <%= form.select :weekday,
+                        Date::DAYNAMES.each_with_index.map { |name, i| [name, i] },
+                        { prompt: "Select day" },
+                        class: "select w-full" %>
+          </div>
+        </div>
+        <!-- Start Time -->
+        <div>
+          <%# 30 min interval time options %>
+          <% def workday_time_options
+            (5..23).flat_map { |h| [0, 30].map { |m| format("%02d:%02d", h, m) } }
+          end %>
+          <%= form.label :start_time,
+                     "Start time",
+                     class: "block text-sm font-medium text-gray-900" %>
+          <div class="mt-2">
+            <%= form.select :start_time,
+                        workday_time_options.map { |t| [t, t] },
+                        { prompt: "Select start time" },
+                        class: "select w-full" %>
+          </div>
+        </div>
+        <!-- End Time -->
+        <div>
+          <%= form.label :end_time,
+                     "End time",
+                     class: "block text-sm font-medium text-gray-900" %>
+          <div class="mt-2">
+            <%= form.select :end_time,
+                        workday_time_options.map { |t| [t, t] },
+                        { prompt: "Select end time" },
+                        class: "select w-full" %>
+          </div>
+        </div>
+        <!-- Slot Duration -->
+        <div>
+          <%= form.label :slot_duration_minutes,
+                     "Appointment duration (minutes)",
+                     class: "block text-sm font-medium text-gray-900" %>
+          <div class="mt-2">
+            <%= form.number_field :slot_duration_minutes,
+                              min: 1,
+                              max: 480,
+                              step: 1,
+                              class: "input w-full" %>
+          </div>
+        </div>
+        <!-- Weeks Ahead -->
+        <div>
+          <%= form.label :weeks_ahead,
+                     "How many weeks ahead clients can book",
+                     class: "block text-sm font-medium text-gray-900" %>
+          <div class="mt-2">
+            <%= form.number_field :weeks_ahead, min: 1, max: 52, step: 1, class: "input w-full" %>
+          </div>
+        </div>
+        <!-- Actions -->
+        <div class="flex items-center justify-end gap-x-6 pt-2">
+          <%= link_to "Cancel",
+          practitioner_dashboard_practitioner_availabilities_path,
+          class: "text-sm font-semibold text-gray-900" %>
+          <%= form.submit(
+            (
+              if practitioner_availability.persisted?
+                "Update Availability"
+              else
+                "Create Availability"
+              end
+            ),
+            class: "btn btn-primary",
+          ) %>
+        </div>
+      </div>
+    <% end %>
   </div>
-
-  <div class="my-5">
-    <%= form.label :end_time %>
-    <%= form.datetime_field :end_time,
-                        class: [
-                          "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                          {
-                            "border-gray-400 focus:outline-blue-600":
-                              practitioner_availability.errors[
-                                :end_time
-                              ].none?,
-                            "border-red-400 focus:outline-red-600":
-                              practitioner_availability.errors[
-                                :end_time
-                              ].any?,
-                          },
-                        ] %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class:
-                  "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-  </div>
-<% end %>
+</div>
