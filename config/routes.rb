@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       get :success
       get :cancel
     end
+
+    resources :holidays, only: [ :create, :destroy ]
   end
 
 
