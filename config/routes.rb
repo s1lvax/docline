@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :practitioner_dashboard do
+    get "licenses/show"
+    get "licenses/create"
+    get "licenses/success"
+    get "licenses/cancel"
+  end
   # registrations
   get "registrations/patient"
   get "registrations/practitioner"
@@ -12,6 +18,12 @@ Rails.application.routes.draw do
   namespace :practitioner_dashboard, path: "practitioner_dashboard" do
     resource :practitioner_profile, only: [ :show, :edit, :update ]
     resources :practitioner_availabilities
+
+    resource :license, only: [ :show, :create ] do
+      post :cancel_subscription, on: :collection
+      get :success
+      get :cancel
+    end
   end
 
 

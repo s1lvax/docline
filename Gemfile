@@ -66,3 +66,6 @@ end
 
 # postmark for emails
 gem "postmark-rails"
+
+# stripe
+gem "stripe-rails"

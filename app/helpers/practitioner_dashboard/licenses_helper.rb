@@ -1,0 +1,2 @@
+module PractitionerDashboard::LicensesHelper
+end
