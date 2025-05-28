@@ -1,7 +1,8 @@
 class PractitionerProfile < ApplicationRecord
   belongs_to :user
   has_rich_text :bio
-  has_many :practitioner_availabilities
+  has_many :practitioner_availabilities, dependent: :destroy
+  has_many :holidays, dependent: :destroy
 
   has_one_attached :profile_picture
 

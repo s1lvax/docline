@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  practitioner_profille: one
+  start_date: 2025-05-28
+  end_date: 2025-05-28
+  name: MyString
+
+two:
+  practitioner_profille: two
+  start_date: 2025-05-28
+  end_date: 2025-05-28
+  name: MyString

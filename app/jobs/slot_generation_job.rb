@@ -1,4 +1,3 @@
-
 class SlotGenerationJob < ApplicationJob
   queue_as :default
 
@@ -10,18 +9,16 @@ class SlotGenerationJob < ApplicationJob
     slot_minutes = availability.slot_duration_minutes
     profile = availability.practitioner_profile
 
-    # Always use the app's time zone!
     today = Time.zone.today
 
-    # Remove existing future slots
+    # Fetch all holidays for the profile, eager-loaded for speed
+    holidays = profile.holidays.to_a
+
+    # Remove existing future unbooked slots
     Slot.where(practitioner_availability_id: availability.id, user_id: nil).delete_all
 
-    # Loop for each week ahead
     weeks_ahead.times do |week_offset|
-      # The date for the correct weekday this week
       slot_date = (today.beginning_of_week(:monday) + availability.weekday.days + week_offset.weeks)
-
-      # Use only hour and min from availability.start_time and end_time, on the slot_date
       start_dt = Time.zone.local(slot_date.year, slot_date.month, slot_date.day, availability.start_time.hour, availability.start_time.min)
       end_dt   = Time.zone.local(slot_date.year, slot_date.month, slot_date.day, availability.end_time.hour,   availability.end_time.min)
 
@@ -29,12 +26,23 @@ class SlotGenerationJob < ApplicationJob
 
       while current_start + slot_minutes.minutes <= end_dt
         current_end = current_start + slot_minutes.minutes
-        Slot.create!(
-          practitioner_availability_id: availability.id,
-          practitioner_profile_id: profile.id,
-          start_time: current_start,
-          end_time: current_end
-        )
+
+        # -- SKIP IF THIS SLOT OVERLAPS WITH A HOLIDAY --
+        slot_is_in_holiday = holidays.any? do |holiday|
+          # Holiday start/end assumed to be Date type; adjust to cover full days
+          holiday_range = holiday.start_date.beginning_of_day..holiday.end_date.end_of_day
+          holiday_range.cover?(current_start) || holiday_range.cover?(current_end - 1.second)
+        end
+
+        unless slot_is_in_holiday
+          Slot.create!(
+            practitioner_availability_id: availability.id,
+            practitioner_profile_id: profile.id,
+            start_time: current_start,
+            end_time: current_end
+          )
+        end
+
         current_start = current_end
       end
     end

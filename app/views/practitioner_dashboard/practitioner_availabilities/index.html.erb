@@ -101,5 +101,74 @@
         </div>
       </div>
     </div>
+
+    <div class="sm:mt-18 mt-24">
+      <h2 class="text-lg font-semibold text-gray-900 mb-1">Holidays</h2>
+      <p class="text-sm text-gray-600 mb-4">
+        No slots will be generated or visible during these periods.<br>
+        <span class="text-red-600">Any availabilities that fall within a holiday will have their slots
+          removed.</span>
+      </p>
+
+      <%= form_with(model: [:practitioner_dashboard, Holiday.new(practitioner_profile_id: @profile.id)], local: true, class: "flex flex-col gap-2 sm:flex-row sm:items-end mb-6") do |f| %>
+        <div class="flex-1">
+          <%= f.label :name, "Holiday Name", class: "block text-sm text-gray-700" %>
+          <%= f.text_field :name, class: "input w-full" %>
+        </div>
+        <div>
+          <%= f.label :start_date, "From", class: "block text-sm text-gray-700" %>
+          <%= f.date_field :start_date, class: "input" %>
+        </div>
+        <div>
+          <%= f.label :end_date, "To", class: "block text-sm text-gray-700" %>
+          <%= f.date_field :end_date, class: "input" %>
+        </div>
+        <div>
+          <%= f.submit "Add", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      <!-- HOLIDAYS TABLE -->
+      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th
+                  class="
+                    py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0
+                  "
+                >Name</th>
+                <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Start Date</th>
+                <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">End Date</th>
+                <th class="relative py-3.5 pr-4 pl-3 sm:pr-0"><span class="sr-only">Delete</span></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <% Holiday.where(practitioner_profile_id: @profile.id).order(start_date: :desc).each do |holiday| %>
+                <tr>
+                  <td class="py-4 pr-3 pl-4 text-sm font-medium text-gray-900 sm:pl-0"><%= holiday.name.presence || "Holiday" %></td>
+                  <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"><%= holiday.start_date&.strftime("%Y-%m-%d") %></td>
+                  <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap"><%= holiday.end_date&.strftime("%Y-%m-%d") %></td>
+                  <td class="relative py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-0">
+                    <%= button_to "Delete",
+                    practitioner_dashboard_holiday_path(holiday),
+                    method: :delete,
+                    data: {
+                      turbo_confirm: "Delete this holiday?",
+                    },
+                    class: "text-red-600 hover:text-red-800" %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if Holiday.where(practitioner_profile_id: @profile.id).empty? %>
+                <tr>
+                  <td colspan="4" class="py-4 text-center text-gray-400">No holidays configured.</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
