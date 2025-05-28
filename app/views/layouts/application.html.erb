@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full">
   <head>
     <title><%= content_for(:title) || "Docline" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -20,9 +20,15 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= stripe_javascript_tag %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="h-full bg-white">
+    <div data-controller="flash">
+      <%= render "layouts/shared/alerts" %>
+    </div>
+    <div data-controller="mobile-menu">
+      <%= yield %>
+    </div>
   </body>
 </html>

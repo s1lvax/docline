@@ -1,0 +1,35 @@
+<section aria-labelledby="applicant-information-title">
+  <div class="bg-white border border-gray-200 sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h2
+        id="applicant-information-title"
+        class="text-lg/6 font-medium text-gray-900"
+      >Your Information</h2>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details about your profession.</p>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Your account's email address</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= Current.user&.email_address %></dd>
+        </div>
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Public email address</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= Current.user&.practitioner_profile.contact_email %></dd>
+        </div>
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Public phone number</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= Current.user&.practitioner_profile.phone %></dd>
+        </div>
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Profession</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= Current.user&.practitioner_profile.profession %></dd>
+        </div>
+        <div class="sm:col-span-2">
+          <dt class="text-sm font-medium text-gray-500">Bio</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= Current.user&.practitioner_profile.bio %></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>

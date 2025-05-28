@@ -1,0 +1,11 @@
+<h2>Hello
+  <%= @profile.name.presence || @profile.user.name %>,</h2>
+<p>Your Docline subscription is now active.</p>
+<p>
+  You can
+  <a href="<%= @invoice_pdf_url %>">download your invoice here</a>.
+</p>
+<p>
+  Thank you for your business!<br>
+  The Docline Team
+</p>

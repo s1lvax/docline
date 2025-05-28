@@ -1,4 +1,34 @@
 Rails.application.routes.draw do
+  namespace :practitioner_dashboard do
+    get "licenses/show"
+    get "licenses/create"
+    get "licenses/success"
+    get "licenses/cancel"
+  end
+  # registrations
+  get "registrations/patient"
+  get "registrations/practitioner"
+  post "registrations/create_user", to: "registrations#create_user", as: :practitioner_registration
+
+  # dashboard root
+  get "practitioner_dashboard", to: "practitioner_dashboard/dashboard#index",
+      as: :practitioner_dashboard
+
+  # everything under /practitioner_dashboard/... lives in that folder
+  namespace :practitioner_dashboard, path: "practitioner_dashboard" do
+    resource :practitioner_profile, only: [ :show, :edit, :update ]
+    resources :practitioner_availabilities
+
+    resource :license, only: [ :show, :create ] do
+      post :cancel_subscription, on: :collection
+      get :success
+      get :cancel
+    end
+
+    resources :holidays, only: [ :create, :destroy ]
+  end
+
+
   resource :session
   resources :passwords, param: :token
   get "pages/index"

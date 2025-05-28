@@ -1,0 +1,48 @@
+<section aria-labelledby="feedback-title" class="mt-12">
+  <div class="bg-white border border-gray-200 sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h2 id="feedback-title" class="text-lg font-medium text-gray-900">Feedback</h2>
+      <p class="mt-1 text-sm text-gray-600">Here’s what users are saying.</p>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+
+      <ul role="list" class="space-y-8">
+        <% [
+          { name: "Leslie Alexander", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330", rating: 2, comment: "Amazing experience, but could be faster.", time: "3d ago" },
+          { name: "Michael Foster", avatar: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5", rating: 4, comment: "Great service, helpful staff, smooth process.", time: "5d ago" },
+          { name: "Dries Vincent", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d", rating: 5, comment: "Truly exceptional. Highly recommended!", time: "1w ago" }
+        ].each do |feedback| %>
+          <li class="flex justify-between space-x-4">
+            <div class="flex space-x-3">
+              <div class="shrink-0">
+                <img class="size-10 rounded-full" src="<%= feedback[:avatar] %>" alt="">
+              </div>
+              <div>
+                <div class="text-sm font-medium text-gray-900"><%= feedback[:name] %></div>
+                <div class="mt-1 flex items-center">
+                  <div class="rating gap-1">
+                    <% 5.times do |i| %>
+                      <input
+                        type="radio"
+                        name="rating-<%= feedback[:name].parameterize %>"
+                        class="mask mask-heart bg-primary"
+                        <%= "checked" if feedback[:rating] == i + 1 %>
+                        disabled
+                      />
+                    <% end %>
+                  </div>
+                </div>
+                <div class="mt-2 text-sm text-gray-700">
+                  <p><%= feedback[:comment] %></p>
+                </div>
+              </div>
+            </div>
+            <div class="text-sm text-gray-500 flex items-center">
+              <%= feedback[:time] %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</section>

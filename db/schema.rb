@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_25_114353) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_155441) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -42,6 +52,44 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_25_114353) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "holidays", force: :cascade do |t|
+    t.bigint "practitioner_profile_id", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["practitioner_profile_id"], name: "index_holidays_on_practitioner_profile_id"
+  end
+
+  create_table "practitioner_availabilities", force: :cascade do |t|
+    t.bigint "practitioner_profile_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "weekday", null: false
+    t.time "start_time", null: false
+    t.time "end_time", null: false
+    t.integer "slot_duration_minutes", default: 30, null: false
+    t.integer "weeks_ahead", default: 4, null: false
+    t.index ["practitioner_profile_id"], name: "index_practitioner_availabilities_on_practitioner_profile_id"
+  end
+
+  create_table "practitioner_profiles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.string "profession"
+    t.boolean "verified"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "contact_email"
+    t.string "address"
+    t.string "phone"
+    t.string "subscription_status"
+    t.string "stripe_customer_id"
+    t.string "stripe_subscription_id"
+    t.index ["user_id"], name: "index_practitioner_profiles_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "ip_address"
@@ -51,15 +99,39 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_25_114353) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "slots", force: :cascade do |t|
+    t.bigint "practitioner_availability_id", null: false
+    t.bigint "practitioner_profile_id", null: false
+    t.bigint "user_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "visible"
+    t.index ["practitioner_availability_id", "start_time", "end_time"], name: "index_slots_on_availability_and_time", unique: true
+    t.index ["practitioner_availability_id"], name: "index_slots_on_practitioner_availability_id"
+    t.index ["practitioner_profile_id"], name: "index_slots_on_practitioner_profile_id"
+    t.index ["user_id"], name: "index_slots_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role"
+    t.string "name"
+    t.string "family_name"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "holidays", "practitioner_profiles"
+  add_foreign_key "practitioner_availabilities", "practitioner_profiles"
+  add_foreign_key "practitioner_profiles", "users"
   add_foreign_key "sessions", "users"
+  add_foreign_key "slots", "practitioner_availabilities"
+  add_foreign_key "slots", "practitioner_profiles"
+  add_foreign_key "slots", "users"
 end

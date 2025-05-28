@@ -1,0 +1,123 @@
+<div
+  class="
+    mx-auto max-w-3xl px-4 sm:px-6 pt-24 md:flex md:items-center md:justify-between
+    md:space-x-5 lg:max-w-7xl lg:px-8
+  "
+>
+  <div class="flex items-center space-x-5">
+    <div class="shrink-0">
+      <div class="avatar">
+        <div class="w-24 rounded-full">
+          <%= render "layouts/shared/pfp" %>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">
+        <% if Current.user.practitioner_profile.name.present? %>
+          <%= Current.user.practitioner_profile.name %>
+        <% else %>
+          <%= "#{Current.user.name} #{Current.user.family_name}" %>
+        <% end %>
+      </h1>
+      <p class="text-sm font-medium text-gray-500">
+        Registered on
+        <%= Current.user.created_at.strftime("%-d %b %Y") %>
+      </p>
+
+      <dl
+        class="
+          mt-3 flex flex-wrap gap-4 text-sm font-medium text-gray-500 capitalize
+        "
+      >
+        <% if Current.user.practitioner_profile.subscription_status == "active" %>
+          <div class="flex items-center">
+            <svg
+              class="mr-1.5 size-5 text-green-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            License Active
+          </div>
+        <% else %>
+          <div class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="mr-1.5 size-5 text-red-400"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            License Not Active
+          </div>
+        <% end %>
+
+        <% if Current.user.practitioner_profile.verified %>
+          <div class="flex items-center">
+            <svg
+              class="mr-1.5 size-5 text-green-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Profile Verified
+          </div>
+        <% else %>
+          <div class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="mr-1.5 size-5 text-red-400"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            Not Verified
+          </div>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+
+  <div
+    class="
+      mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse
+      sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse
+      md:mt-0 md:flex-row md:space-x-3
+    "
+  >
+    <%= link_to "Edit Profile",
+    edit_practitioner_dashboard_practitioner_profile_path,
+    class: "btn btn-outline" %>
+    <% if !Current.user&.practitioner_profile.verified %>
+      <button type="button" class="btn btn-primary">Ask for verification</button>
+    <% end %>
+  </div>
+</div>
