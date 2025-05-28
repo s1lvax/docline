@@ -7,4 +7,8 @@ class PractitionerProfile < ApplicationRecord
 
   validates :bio, length: { maximum: 1000 }
   validates :profession, length: { maximum: 255 }
+
+  def subscription_active?
+    subscription_status == "active"
+  end
 end

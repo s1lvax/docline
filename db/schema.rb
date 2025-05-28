@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_27_154206) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_094521) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -74,6 +74,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_27_154206) do
     t.string "contact_email"
     t.string "address"
     t.string "phone"
+    t.string "subscription_status"
+    t.string "stripe_customer_id"
+    t.string "stripe_subscription_id"
     t.index ["user_id"], name: "index_practitioner_profiles_on_user_id"
   end
 

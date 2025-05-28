@@ -27,5 +27,9 @@ module Docline
     # config emails
     config.action_mailer.delivery_method = :postmark
     config.action_mailer.postmark_settings = { api_token: Rails.application.credentials.dig(:postmark, :api_key) }
+
+    # stripe
+    config.stripe.secret_key = Rails.application.credentials.dig(:stripe, :secret_key)
+    config.stripe.publishable_key = Rails.application.credentials.dig(:stripe, :publishable_key)
   end
 end
