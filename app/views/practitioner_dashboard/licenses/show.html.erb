@@ -8,34 +8,12 @@
       Only licensed doctors are visible to patients for booking.<br>
       Without a license, clients cannot see or reserve your availabilities.
     </p>
-    <p class="mb-2 text-center text-indigo-700 font-semibold">
-      No payment is charged today.<br>
-      Your subscription starts with a
-      <strong>full free month</strong>
-      – your first payment will be due next month.
-    </p>
     <p class="mb-6 text-lg font-semibold text-center">
       <span class="text-indigo-700">€99</span>
-      <span class="text-gray-500 font-normal">/month after your first month</span>
+      <span class="text-gray-500 font-normal">/month – pay only when you're ready to accept bookings</span>
     </p>
 
     <ul class="mb-7 space-y-2 text-sm sm:text-base">
-      <li class="flex items-center">
-        <svg
-          class="h-5 w-5 mr-2 text-green-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M5 13l4 4L19 7"
-          />
-        </svg>
-        First month is completely free – pay nothing until next month!
-      </li>
       <li class="flex items-center">
         <svg
           class="h-5 w-5 mr-2 text-green-500"
@@ -142,8 +120,7 @@
       <%= button_to "Cancel Subscription",
       cancel_subscription_practitioner_dashboard_license_path,
       method: :post,
-      class:
-        "btn btn-outline w-full text-lg border-red-400 text-red-700 hover:bg-red-50",
+      class: "btn btn-danger btn-outline w-full text-lg",
       data: {
         turbo: false,
         confirm: "Are you sure you want to cancel your subscription?",

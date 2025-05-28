@@ -68,6 +68,7 @@ module PractitionerDashboard
           cancel_at_period_end: true # Or use :cancel_now if you want immediate
         )
         profile.update!(subscription_status: "canceled")
+        SendSubscriptionCanceledJob.perform_later(profile.id)
         flash[:notice] = "Your subscription will be canceled at the end of the current period."
       else
         flash[:alert] = "No active subscription found."

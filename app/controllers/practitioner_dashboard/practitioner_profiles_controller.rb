@@ -5,6 +5,17 @@ module PractitionerDashboard
 
     # GET /practitioner_dashboard/practitioner_profile
     def show
+      if @profile.stripe_customer_id.present?
+        @invoices = Stripe::Invoice.list(customer: @profile.stripe_customer_id, limit: 4).data.map do |inv|
+          {
+            label: inv.lines.data&.first&.description || "Invoice",
+            date: inv.created ? Time.at(inv.created).to_date : nil,
+            pdf_url: inv.invoice_pdf
+          }
+        end
+      else
+        @invoices = []
+      end
     end
 
     # GET /practitioner_dashboard/practitioner_profile/edit
