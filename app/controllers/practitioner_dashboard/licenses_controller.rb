@@ -50,7 +50,11 @@ module PractitionerDashboard
         stripe_subscription_id: stripe_subscription_id
       )
 
-      flash[:notice] = "Your license purchase was successful! Status: #{subscription.status.titleize}"
+      if profile.subscription_status == "active"
+        MakeSlotsVisibleJob.perform_later(profile.id)
+      end
+
+      flash[:notice] = "Your license purchase was successful. Your availabilities are now bookable!"
       redirect_to practitioner_dashboard_practitioner_profile_path
     end
 

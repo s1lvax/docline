@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_28_153823) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_155441) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -107,6 +107,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_153823) do
     t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "visible"
     t.index ["practitioner_availability_id", "start_time", "end_time"], name: "index_slots_on_availability_and_time", unique: true
     t.index ["practitioner_availability_id"], name: "index_slots_on_practitioner_availability_id"
     t.index ["practitioner_profile_id"], name: "index_slots_on_practitioner_profile_id"
