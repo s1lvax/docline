@@ -16,8 +16,8 @@ Rails.application.routes.draw do
 
   # everything under /practitioner_dashboard/... lives in that folder
   namespace :practitioner_dashboard, path: "practitioner_dashboard" do
-    resource :practitioner_profile, only: [ :show, :edit, :update ]
-    resources :practitioner_availabilities
+    resource :profile, only: [ :show, :edit, :update ]
+    resources :availabilities
 
     resource :license, only: [ :show, :create ] do
       post :cancel_subscription, on: :collection

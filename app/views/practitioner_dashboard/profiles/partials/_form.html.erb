@@ -5,7 +5,7 @@
   "
 >
   <div class="w-full max-w-5xl">
-    <%= form_with model: [:practitioner_dashboard, @profile], local: true do |form| %>
+    <%= form_with model: @profile, url: practitioner_dashboard_profile_path, local: true do |form| %>
       <div class="space-y-16 bg-white p-6 sm:p-10">
         <!-- Profile section -->
         <div class="pb-8">
@@ -101,7 +101,7 @@
         <!-- Form actions -->
         <div class="mt-6 flex items-center justify-end gap-x-6">
           <%= link_to "Cancel",
-          practitioner_dashboard_practitioner_profile_path,
+          practitioner_dashboard_profile_path,
           class: "text-sm font-semibold text-gray-900" %>
           <%= form.submit "Save", class: "btn btn-primary" %>
         </div>

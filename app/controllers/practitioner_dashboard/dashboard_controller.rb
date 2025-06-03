@@ -12,5 +12,9 @@ module PractitionerDashboard
       @profile = Current.user.practitioner_profile ||
                  Current.user.create_practitioner_profile!
     end
+
+    def require_practitioner
+      redirect_to root_path unless Current.user&.practitioner?
+    end
   end
 end

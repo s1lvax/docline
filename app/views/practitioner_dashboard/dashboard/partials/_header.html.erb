@@ -49,10 +49,10 @@
     >
       <%= link_to "Home", practitioner_dashboard_path, class: "hover:text-indigo-600" %>
       <%= link_to "Profile",
-      practitioner_dashboard_practitioner_profile_path,
+      practitioner_dashboard_profile_path,
       class: "hover:text-indigo-600" %>
       <%= link_to "Availabilities & Holidays",
-      practitioner_dashboard_practitioner_availabilities_path,
+      practitioner_dashboard_availabilities_path,
       class: "hover:text-indigo-600" %>
       <%= link_to "License",
       practitioner_dashboard_license_path,
@@ -79,7 +79,7 @@
         </svg>
       </button>
       <!-- Profile avatar -->
-      <%= link_to practitioner_dashboard_practitioner_profile_path, class: "-m-1.5 p-1.5" do %>
+      <%= link_to practitioner_dashboard_profile_path, class: "-m-1.5 p-1.5" do %>
         <span class="sr-only">Your profile</span>
         <div class="avatar rounded-full h-12 w-12">
           <%= render "layouts/shared/pfp" %>

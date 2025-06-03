@@ -1,0 +1,17 @@
+<%= render "practitioner_dashboard/dashboard/partials/header" %>
+<%= render "practitioner_dashboard/profiles/partials/profile_header" %>
+<div class="min-h-full">
+  <main class="py-12">
+    <div
+      class="
+        mx-auto grid max-w-3xl lg:max-w-7xl lg:grid-cols-3 lg:grid-flow-col-dense gap-6
+      "
+    >
+      <div class="lg:col-span-2 space-y-6">
+        <%= render "practitioner_dashboard/profiles/partials/profile_information" %>
+        <%= render "practitioner_dashboard/profiles/partials/profile_feedback" %>
+      </div>
+      <%= render "practitioner_dashboard/profiles/partials/latest_invoices" %>
+    </div>
+  </main>
+</div>

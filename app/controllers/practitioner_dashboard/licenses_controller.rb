@@ -1,7 +1,5 @@
 module PractitionerDashboard
-  class LicensesController < ApplicationController
-    before_action :require_practitioner
-
+  class LicensesController < PractitionerDashboard::DashboardController
     def show
       @profile = Current.user.practitioner_profile
     end
@@ -55,12 +53,12 @@ module PractitionerDashboard
       end
 
       flash[:notice] = "Your license purchase was successful. Your availabilities are now bookable!"
-      redirect_to practitioner_dashboard_practitioner_profile_path
+      redirect_to practitioner_dashboard_profile_path
     end
 
     def cancel
       flash[:alert] = "Your license purchase was canceled"
-      redirect_to practitioner_dashboard_practitioner_profile_path
+      redirect_to practitioner_dashboard_profile_path
     end
 
     def cancel_subscription
@@ -78,7 +76,7 @@ module PractitionerDashboard
         flash[:alert] = "No active subscription found."
       end
 
-      redirect_to practitioner_dashboard_practitioner_profile_path
+      redirect_to practitioner_dashboard_profile_path
     end
   end
 end

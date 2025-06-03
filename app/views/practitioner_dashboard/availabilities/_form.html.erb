@@ -8,8 +8,8 @@
     <%= form_with(
       model: practitioner_availability,
       url: practitioner_availability.persisted? ?
-        practitioner_dashboard_practitioner_availability_path(practitioner_availability) :
-        practitioner_dashboard_practitioner_availabilities_path,
+        practitioner_dashboard_availability_path(practitioner_availability) :
+        practitioner_dashboard_availabilities_path,
       method: practitioner_availability.persisted? ? :patch : :post,
       local: true
     ) do |form| %>
@@ -91,7 +91,7 @@
         <!-- Actions -->
         <div class="flex items-center justify-end gap-x-6 pt-2">
           <%= link_to "Cancel",
-          practitioner_dashboard_practitioner_availabilities_path,
+          practitioner_dashboard_availabilities_path,
           class: "text-sm font-semibold text-gray-900" %>
           <%= form.submit(
             (
